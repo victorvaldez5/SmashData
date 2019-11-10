@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const frontendDistPath = path.resolve(__dirname, 'dist');
+const frontendDistPath = path.resolve(__dirname, '..', 'smashdata', 'static');
 const config = {
   entry: path.resolve(__dirname, 'src'),
   output: {

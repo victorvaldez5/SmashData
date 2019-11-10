@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import operator
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/dist/')
 app.config["MONGO_URI"] = "mongodb://yoda:theforce@0.0.0.0:27017/minecraftapp"
 mongo = PyMongo(app)
 ROOTDIR = os.path.dirname(os.path.abspath(__file__))
@@ -117,6 +117,9 @@ def get_battle():
     #look for character in dataset somehow..
     return compare(get_characters(control_name, opponent_name))
 
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="4000", debug=True)

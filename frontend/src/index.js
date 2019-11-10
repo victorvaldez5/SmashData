@@ -33418,6 +33418,7 @@ function Character(props){
     const characterChange = (selectedOption) => {
         if (selectedOption) {
             setSelected({ selectedOption })
+            props.setCharacter(selected.value)
             setCleared(false)
         } else {
           setCleared(true)
@@ -33686,67 +33687,42 @@ function GrabSet(props) {
     )
 }
 
-const App = () => {
-  const [selected, setSelected] = useState("");
-  const [apiData, setApiData] = useState(null);
-  const [options, setOptions] = useState(null);
+function cGroundAttacks(props){
 
-    useEffect(() => {
-        fetch('http://0.0.0.0:4000/blocks').then(resp=> resp.json()).then(data=>setOptions(data.result))
-    }, []);
+}
+
+const App = () => {
+  const [me, setMe] = useState("");
+  const [opponent, setOpponent] = useState("");
 
   useEffect(() => {
-      if(selected) {
-          const {value, label} = selected.selectedOption;
-          fetch(`http://127.0.0.1:4000/colors?block=${value}`)
-              .then(resp => resp.json())
-              .then(data => {
-                  setApiData(data)
-              });
-      }
-  }, [selected]);
-  const handleChange = (selectedOption) => {
-    setSelected({ selectedOption })
-  };
+    if(me !== "" && opponent !== "") {
+      fetch(`http://0.0.0.0:4000/compare?control=${me}&opponent=${opponent}`)
+          .then(resp=>resp.json).then(data=>console.log(data))
+
+    }
+  }, [me, opponent])
+
+  function compareGround() {
+    fetch(`http://0.0.0.0:4000/compare?control=${me}&opponent=${opponent}`)
+          .then(resp=>resp.json).then(data=>console.log(data))
+  }
 
   return (
       <Container>
-          {/*<Row>
-              <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <Select
-                  value={selected && selected.label}
-                  onChange={handleChange}
-                  options={options}
-                  isClearable={false}
-                  theme={theme => ({
-                      ...theme,
-                      borderRadius: 0,
-                      colors: {
-                        ...theme.colors,
-                        primary25: 'grey',
-                        primary: '#00909e',
-                      },
-                    })}
-                />
-               </Col>
-           </Row>
-          <br/>
-          <Row>
-              {apiData && <h6 style={{color:"#c9d1d3"}}>Recommended Complimentary Blocks/Colors</h6>}
-          </Row>
-          <Row>
-              {apiData && Object.keys(apiData).map(item => {
-                  return <Col style={{backgroundColor: `${apiData[item]}`}}></Col>
-                    })
-                  }
-          </Row>*/}
+
           <Row>
             <Col>
-              <Character/>
+              <Character setCharacter={setMe}/>
             </Col>
 
             <Col>
-              <Character/>
+              <Character setCharacter={setOpponent}/>
+            </Col>
+            <Col>
+              <Button onClick={compareGround} style={{ marginBottom: '1rem' }}>
+                Compare Ground Attacks
+              </Button>
             </Col>
           </Row>
       </Container>

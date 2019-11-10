@@ -1,8 +1,11 @@
-from smashdata.utils.factories import *
+from smashdata.models.smash_classes import CharacterStats
+from smashdata.utils.dodge_factory import *
+from smashdata.utils.offense_factories import *
 import json
 import pprint
 
 pp = pprint.PrettyPrinter(indent=2)
+
 
 def get_offensive(moveset):
     ground_attacks = moveset['ground_attacks']
@@ -16,6 +19,7 @@ def get_offensive(moveset):
     smash_set = create_smash_set(smashes)
     aerial_set = create_aerial_set(aerialset)
     return {'tilt_set': tilt_set, 'smash_set': smash_set, 'aerial_set': aerial_set, 'special_attacks': specials}
+
 
 def format_stats(stats):
     jumps = stats['SH / FH / SHFF / FHFF Frames'].split('/')
@@ -49,13 +53,7 @@ def get_dodges(dodges):
         dodge['invulnerable_frames'] = dodge['notes']
         del dodge['notes']
     dodges_set = create_dodges(dodges)
-    for d in dodges_set:
-        print(d.move_name)
-    return dodges
-
-
-def get_grabs(grabs):
-    return grabs
+    return dodges_set
 
 
 def main():
@@ -65,8 +63,7 @@ def main():
             offensive = get_offensive(moveset)
             stats = format_stats(moveset['stats'])
             dodges = get_dodges(moveset['dodges'])
-            grabs = get_grabs(moveset['grabs'])
-            break
+
 
 if __name__ == "__main__":
     main()

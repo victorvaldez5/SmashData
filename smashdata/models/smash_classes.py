@@ -20,7 +20,6 @@ class BaseAttack(BaseMove):
             self._set_type_and_direction()
 
     def _set_type_and_direction(self):
-        print(self.move_name)
         data = self.move_name.lower().split(' ')
         setattr(self, 'type', data[1])
         setattr(self, 'direction', data[0])
@@ -121,16 +120,6 @@ class SpecialMoveSet:
         self.down_b = down_b
         self.neutral_b = neutral_b
 
-class GrabSet:
-    grab = None
-    dash_grab = None
-    pivot_grab = None
-
-    def __init__(self, grab, dash_grab, pivot_grab):
-        self.grab = grab
-        self.dash_grab = dash_grab
-        self.pivot_grab = pivot_grab
-
 class ThrowSet:
     forward_throw = None
     backward_throw = None
@@ -148,17 +137,17 @@ class ThrowSet:
 class AirDodgeSet:
     neutral = None
     air_dodge_down = None
-    air_dodge_diagonal_down = None
+    air_dodge_diagonally_down = None
     air_dodge_side = None
-    air_dodge_diagonal_up = None
+    air_dodge_diagonally_up = None
     air_dodge_up = None
 
-    def __init__(self, neutral, air_dodge_down, air_dodge_diagonal_down, air_dodge_side, air_dodge_diagonal_up, air_dodge_up):
+    def __init__(self, neutral, air_dodge_down, air_dodge_diagonally_down, air_dodge_side, air_dodge_diagonally_up, air_dodge_up):
         self.neutral = neutral
         self.air_dodge_down = air_dodge_down
-        self.air_dodge_diagonal_down = air_dodge_diagonal_down
+        self.air_dodge_diagonal_down = air_dodge_diagonally_down
         self.air_dodge_side = air_dodge_side
-        self.air_dodge_diagonal_up = air_dodge_diagonal_up
+        self.air_dodge_diagonal_up = air_dodge_diagonally_up
         self.air_dodge_up = air_dodge_up
 
 class DodgeSet:
@@ -172,12 +161,6 @@ class DodgeSet:
         self.forward_roll = forward_roll
         self.backward_roll = backward_roll
         self.air_dodges = air_dodges
-
-    def __init__(self, dodges, air_dodges, out_of_shield_options):
-        self.dodges = dodges
-        self.air_dodges = air_dodges
-        self.out_of_shield_options = out_of_shield_options
-
 
 class Offensive:
     tilt_set = None

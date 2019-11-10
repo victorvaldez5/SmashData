@@ -6,6 +6,7 @@ class BaseMove:
         self.move_name = move_name
         self.total_frames = total_frames
 
+
  class BaseAttack(BaseMove):
      startup = None
      base_damage = None

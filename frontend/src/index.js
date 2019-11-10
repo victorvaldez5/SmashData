@@ -9,10 +9,32 @@ import styled from 'styled-components';
 const Button = styled.button`
   margin: 0.5em 1em;
   padding: 0.25em 1em;
-  background: #1b2a49;
-  color: white;`
+  background: #E2E2E2;
+  color: black;`
 
-document.body.style = 'background: #465881;';
+const SelectContainer = styled.div`
+  display:flex;
+  width:100%;
+  box-shadow: 2px 2px 2px black`
+
+const HeaderContainer = styled.div`
+  background-color:#86D38C;
+  height:5%;
+  padding:1em;
+  box-shadow: 2px 2px 2px black`
+
+const BodyContainer = styled.div`
+  background-color:#a1aab0;`
+
+const SpanContainer = styled.span`
+  display:inline;
+  width:100%;
+  padding-left:1em;
+  padding-right:4em;
+  padding-bottom:1em;
+  background-color:white;`
+
+document.body.style = 'background: #a1aab0';
 const characters = [
     {'label': 'Banjo and Kazooie', 'value': 'banjo_and_kazooie'},
     {'label': 'Bayonetta', 'value': 'bayonetta'},
@@ -33701,26 +33723,37 @@ const App = () => {
 
   useEffect(() => {
     if(me !== "" && opponent !== "") {
-      fetch(`/compare?control=${me.value}&opponent=${opponent.value}`)
-          .then(resp => resp.json()).then(resp => console.log(resp))
-      console.log(diff)
+      fetch(`http://0.0.0.0:4000/compare?control=${me.value}&opponent=${opponent.value}`)
+          .then(resp=>resp.json).then(data=>setDiff(data))
+
     }
   }, [me, opponent])
 
   return (
+    <BodyContainer>
+      <HeaderContainer>
+        <h1>What's The Move?</h1>
+        <h4>Frame data analysis for SSBU</h4>
+      </HeaderContainer>
+      <SelectContainer>
+        <SpanContainer><p>You are playing: </p><Character setCharacter={setMe}/></SpanContainer>
+
+        <SpanContainer><p>Against:</p><Character setCharacter={setOpponent}/></SpanContainer>
+      </SelectContainer>
+
       <Container>
 
           <Row>
             <Col>
-              <Character setCharacter={setMe}/>
             </Col>
 
             <Col>
-              <Character setCharacter={setOpponent}/>
             </Col>
           </Row>
           {diff && <DiffContainer diff={diff} />}
       </Container>
+
+    </BodyContainer>
   );
 };
 

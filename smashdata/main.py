@@ -116,7 +116,7 @@ def get_battle():
 
     #look for character in dataset somehow..
     return compare(get_characters(control_name, opponent_name))
-
+    
 @app.route('/')
 def index():
     return app.send_static_file('index.html')

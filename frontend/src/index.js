@@ -33709,11 +33709,15 @@ function GrabSet(props) {
     )
 }
 
-const DiffContainer = (props) => {
+const DiffContainer = ({diff}) => {
   return (
-      <div>
-        {props.diff}
-      </div>
+      <span>
+        <p><strong>{diff.move_name['0']}</strong>: {diff.diff['0']}</p>
+        <p><strong>{diff.move_name['1']}</strong>: {diff.diff['1']}</p>
+        <p><strong>{diff.move_name['2']}</strong>: {diff.diff['2']}</p>
+        <p><strong>{diff.move_name['3']}</strong>: {diff.diff['3']}</p>
+        <p><strong>{diff.move_name['4']}</strong>: {diff.diff['4']}</p>
+      </span>
   )
 }
 const App = () => {
@@ -33723,9 +33727,8 @@ const App = () => {
 
   useEffect(() => {
     if(me !== "" && opponent !== "") {
-      fetch(`http://0.0.0.0:4000/compare?control=${me.value}&opponent=${opponent.value}`)
-          .then(resp=>resp.json).then(data=>setDiff(data))
-
+      fetch(`/compare?control=${me.value}&opponent=${opponent.value}`)
+          .then(resp => resp.json()).then(resp => setDiff(resp))
     }
   }, [me, opponent])
 

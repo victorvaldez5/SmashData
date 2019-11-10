@@ -33687,26 +33687,25 @@ function GrabSet(props) {
     )
 }
 
-function cGroundAttacks(props){
-
+const DiffContainer = (props) => {
+  return (
+      <div>
+        {props.diff}
+      </div>
+  )
 }
-
 const App = () => {
   const [me, setMe] = useState("");
   const [opponent, setOpponent] = useState("");
+  const [diff, setDiff] = useState(null);
 
   useEffect(() => {
     if(me !== "" && opponent !== "") {
       fetch(`http://0.0.0.0:4000/compare?control=${me.value}&opponent=${opponent.value}`)
-          .then(resp=>resp.json).then(data=>console.log(data))
+          .then(resp=>resp.json).then(data=>setDiff(data))
 
     }
   }, [me, opponent])
-
-  function compareGround() {
-    fetch(`http://0.0.0.0:4000/compare?control=${me}&opponent=${opponent}`)
-          .then(resp=>resp.json).then(data=>console.log(data))
-  }
 
   return (
       <Container>
@@ -33719,12 +33718,8 @@ const App = () => {
             <Col>
               <Character setCharacter={setOpponent}/>
             </Col>
-            <Col>
-              <Button onClick={compareGround} style={{ marginBottom: '1rem' }}>
-                Compare Ground Attacks
-              </Button>
-            </Col>
           </Row>
+          {diff && <DiffContainer diff={diff} />}
       </Container>
   );
 };

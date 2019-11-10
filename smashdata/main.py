@@ -45,40 +45,40 @@ def get_characters(control_name, opponent_name):
     oga_df = pd.DataFrame(oga)
 
     if cga_df.shape[0] > oga_df.shape[0]:
-        control_moves = list(cga_df['movename'])
-        opponent_moves = list(oga_df['movename'])
+        control_moves = list(cga_df['move_name'])
+        opponent_moves = list(oga_df['move_name'])
         removed = False
         for move in control_moves:
             if move not in opponent_moves:
                 print(move)
-                cga_df = cga_df[cga_df.movename != move]
+                cga_df = cga_df[cga_df.move_name != move]
 
     cga_df = cga_df.reset_index(drop=True)
 
     if cga_df.shape[0] < oga_df.shape[0]:
-        control_moves = list(cga_df['movename'])
-        opponent_moves = list(oga_df['movename'])
+        control_moves = list(cga_df['move_name'])
+        opponent_moves = list(oga_df['move_name'])
 
         for move in opponent_moves:
             if move not in control_moves:
                 print(move)
-                oga_df = oga_df[oga_df.movename != move]
+                oga_df = oga_df[oga_df.move_name != move]
 
     oga_df = oga_df.reset_index(drop=True)
 
     #check diff again lol
     if cga_df.shape[0] > oga_df.shape[0]:
-        control_moves = list(cga_df['movename'])
-        opponent_moves = list(oga_df['movename'])
+        control_moves = list(cga_df['move_name'])
+        opponent_moves = list(oga_df['move_name'])
         removed = False
         for move in control_moves:
             if move not in opponent_moves:
                 print(move)
-                cga_df = cga_df[cga_df.movename != move]
+                cga_df = cga_df[cga_df.move_name != move]
 
     cga_df = cga_df.reset_index(drop=True)
 
-    return[cga_df[['movename', 'totalframes', 'activeframes']], oga_df[['movename', 'totalframes', 'activeframes']]]
+    return[cga_df[['move_name', 'total_frames', 'active_frames']], oga_df[['move_name', 'total_frames', 'active_frames']]]
 
 
 def compare(attack_set):
@@ -86,8 +86,8 @@ def compare(attack_set):
     control = attack_set[0]
     opponent = attack_set[1]
 
-    control['win'] = np.where(control.totalframes < opponent.totalframes, 'yes', 'no')
-    control['diff'] = np.where(control.totalframes != opponent.totalframes, control.totalframes.astype(int) - opponent.totalframes.astype(int), 0)
+    control['win'] = np.where(control.total_frames < opponent.total_frames, 'yes', 'no')
+    control['diff'] = np.where(control.total_frames != opponent.total_frames, control.total_frames.astype(int) - opponent.total_frames.astype(int), 0)
 
     return control.to_json()
 
@@ -106,7 +106,7 @@ def weakest_strongest():
                 break
 
     char_power = sorted(char_power.items(), key=operator.itemgetter(1))
-    return json.dumps({'weakest': char_power[0], 'strongest':char_power[len(char_power) - 1]})
+    return json.dumps({'weakest': char_power[0], 'strongest': char_power[len(char_power) - 1]})
 
 
 @app.route('/compare/', methods=['GET'])

@@ -33412,13 +33412,13 @@ const Everything = {
     }
   }
 }
-function Character(props){
+function Character({setCharacter}){
     const [selected, setSelected] = useState("");
     const [cleared, setCleared] = useState(false);
     const characterChange = (selectedOption) => {
         if (selectedOption) {
             setSelected({ selectedOption })
-            props.setCharacter(selected.value)
+            setCharacter(prevState => {return {...prevState, ...selectedOption}})
             setCleared(false)
         } else {
           setCleared(true)
@@ -33697,7 +33697,7 @@ const App = () => {
 
   useEffect(() => {
     if(me !== "" && opponent !== "") {
-      fetch(`http://0.0.0.0:4000/compare?control=${me}&opponent=${opponent}`)
+      fetch(`http://0.0.0.0:4000/compare?control=${me.value}&opponent=${opponent.value}`)
           .then(resp=>resp.json).then(data=>console.log(data))
 
     }

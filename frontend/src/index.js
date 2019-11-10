@@ -33700,10 +33700,11 @@ const App = () => {
   const [diff, setDiff] = useState(null);
 
   useEffect(() => {
+    console.log(me)
     if(me !== "" && opponent !== "") {
-      fetch(`http://0.0.0.0:4000/compare?control=${me.value}&opponent=${opponent.value}`)
-          .then(resp=>resp.json).then(data=>setDiff(data))
-
+      fetch(`/compare?control=${me.value}&opponent=${opponent.value}`)
+          .then(resp => resp.json()).then(resp => console.log(resp))
+      console.log(diff)
     }
   }, [me, opponent])
 

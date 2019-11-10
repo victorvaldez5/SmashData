@@ -28,7 +28,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
-    "start": "webpack -d --config ./webpack.common.js --mode development",
+    "start": "webpack --watch -d --config ./webpack.common.js --mode development",
     "server": "webpack-dev-server --config ./webpack.common.js --mode development"
   },
   "author": "",

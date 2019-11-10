@@ -7,7 +7,7 @@ const config = {
   entry: path.resolve(__dirname, 'src'),
   output: {
     path: frontendDistPath,
-    filename: '[name].[hash].js',
+    filename: 'index.js',
   },
   devServer: {
     index: 'index.html',
@@ -78,18 +78,6 @@ const config = {
       filename: 'index.html',
     }),
   ],
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-  },
 };
 
 module.exports = config;

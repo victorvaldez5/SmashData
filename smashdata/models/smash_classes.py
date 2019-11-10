@@ -211,12 +211,10 @@ class CharacterStats:
 class Moveset:
     offensive = None
     dodge_set = None
-    grabs = None
 
-    def __init__(self, offensive, dodge_set, grabs):
+    def __init__(self, offensive, dodge_set):
         self.offensive = offensive
         self.dodge_set = dodge_set
-        self.grabs = grabs
 
 
 class Character:

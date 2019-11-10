@@ -1,13 +1,13 @@
 version: "3"
 services:
     server:
-        build: ./server
+        build: ./smashdata
         expose:
           - 4000
         ports:
           - 4000:4000
         volumes:
-          - ./server:/code
+          - ./smashdata:/code
         environment:
           - FLASK_ENV=development
           - FLASK_APP=app.py

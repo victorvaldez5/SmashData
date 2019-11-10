@@ -23,6 +23,7 @@ def get_moves(category, class_name_list):
         moves_data.append(move)
     return moves_data
 
+
 def get_stats(container):
     stats_list = container.next_sibling.next_sibling.find('div', class_='movecontainer').find_all('div')
     stats = {}
@@ -33,7 +34,9 @@ def get_stats(container):
         stats[name] = val
     return stats
 
-characters = ['banjo and kazooie', 'bayonetta',
+
+def get_character_data():
+    characters = ['banjo and kazooie', 'bayonetta',
             'bowser', 'bowser jr', 'captain falcon',
             'chrom', 'cloud', 'corrin', 'daisy', 'dark pit',
             'dark samus', 'diddy kong', 'donkey kong', 'dr mario',
@@ -51,32 +54,37 @@ characters = ['banjo and kazooie', 'bayonetta',
             'simon', 'snake', 'sonic', 'toon link', 'villager', 'wario',
             'wolf', 'yoshi', 'young link', 'zelda', 'zero suit samus']
 
-characters_data = {}
-for character in characters:
-    character_data_dict = {}
-    name = character.replace(' ', '_')
-    url = f'https://ultimateframedata.com/{name}'
-    page = requests.get(url)
-    if page.text:
-        page = BS(page.text, 'html.parser')
-        # Make these into classes
-        groundattacks = get_moves(page.find('h2', id='groundattacks'), attack_classes)
-        aerialattacks = get_moves(page.find('h2', id='aerialattacks'), attack_classes)
-        specialattacks = get_moves(page.find('h2', id='specialattacks'), attack_classes)
-        grabs = get_moves(page.find('h2', id='grabs'), move_classes)
-        dodges = get_moves(page.find('h2', id='dodges'), base_classes)
-        misc = get_stats(page.find('h2', id='misc'))
-        characters_data[name.replace(" ", "_")] = {
-            'ground_attacks': groundattacks,
-            'aerial_attacks': aerialattacks,
-            'special_attacks': specialattacks,
-            'grabs': grabs,
-            'dodges': dodges,
-            'stats': misc
-        }
-with open('characters.json', 'w') as f:
-    data = json.dumps(characters_data)
-    f.write(data)
+    characters_data = {}
+    for character in characters:
+        character_data_dict = {}
+        name = character.replace(' ', '_')
+        url = f'https://ultimateframedata.com/{name}'
+        page = requests.get(url)
+        if page.text:
+            page = BS(page.text, 'html.parser')
+            # Make these into classes
+            groundattacks = get_moves(page.find('h2', id='groundattacks'), attack_classes)
+            aerialattacks = get_moves(page.find('h2', id='aerialattacks'), attack_classes)
+            specialattacks = get_moves(page.find('h2', id='specialattacks'), attack_classes)
+            grabs = get_moves(page.find('h2', id='grabs'), move_classes)
+            dodges = get_moves(page.find('h2', id='dodges'), base_classes)
+            misc = get_stats(page.find('h2', id='misc'))
+            characters_data[name.replace(" ", "_")] = {
+                'ground_attacks': groundattacks,
+                'aerial_attacks': aerialattacks,
+                'special_attacks': specialattacks,
+                'grabs': grabs,
+                'dodges': dodges,
+                'stats': misc
+            }
+    return characters_data
 
 
+def create_json_file(characters_data):
+    with open('characters.json', 'w') as f:
+        data = json.dumps(characters_data)
+        f.write(data)
+
+
+create_json_file(characters_data=get_character_data())
 

@@ -33700,7 +33700,6 @@ const App = () => {
   const [diff, setDiff] = useState(null);
 
   useEffect(() => {
-    console.log(me)
     if(me !== "" && opponent !== "") {
       fetch(`/compare?control=${me.value}&opponent=${opponent.value}`)
           .then(resp => resp.json()).then(resp => console.log(resp))

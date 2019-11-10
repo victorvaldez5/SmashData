@@ -72,10 +72,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       // eslint-disable-next-line global-require
-      template: require('html-webpack-template'),
-      inject: false,
-      appMountId: 'root',
-      filename: 'index.html',
+      template: './src/index.html'
     }),
   ],
 };
